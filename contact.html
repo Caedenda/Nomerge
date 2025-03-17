@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Mind Merge</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .member-cards {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .member-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-card img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        .member-card h3 {
+            margin: 0.5rem 0;
+            color: var(--text-color);
+        }
+
+        .member-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-color);
+        }
+
+        .contact-form button {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .contact-form button:hover {
+            opacity: 0.9;
+        }
+
+        /* Updated heading styles for better visibility */
+        h2 {
+            color: var(--accent-color);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-size: 2.5em;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Enhanced Light theme specific styles */
+        .theme-light h2 {
+            color: #2E1A47;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+
+        .theme-light p {
+            color: #2E1A47;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-light .contact-form {
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border: 2px solid #9370DB;
+        }
+
+        .theme-light .contact-form h3 {
+            color: #2E1A47;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-light .contact-form input,
+        .theme-light .contact-form textarea {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #9370DB;
+            color: #2E1A47;
+            font-weight: 500;
+        }
+
+        .theme-light .contact-form button {
+            background: #9370DB;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-light .contact-form button:hover {
+            background: #8A2BE2;
+            transform: translateY(-2px);
+        }
+
+        .theme-light .member-card {
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid #9370DB;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-light .member-card h3 {
+            color: #2E1A47;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-light .member-card p,
+        .theme-light .member-card li {
+            color: #2E1A47;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-light ul {
+            color: #2E1A47;
+            list-style-type: none;
+            padding-left: 20px;
+            text-align: left;
+        }
+
+        .social-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 20px;
+            background: #4267B2;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        .social-link:hover {
+            background: #365899;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(66, 103, 178, 0.3);
+        }
+
+        .theme-light .social-link {
+            background: #9370DB;
+        }
+
+        .theme-light .social-link:hover {
+            background: #8A2BE2;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="info.html">Game Info</a></li>
+            <li><a href="game.html">Play Game</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="theme-selector">
+                <button class="theme-btn blue" data-theme="default" title="Blue Theme"></button>
+                <button class="theme-btn pink" data-theme="pink" title="Pink Theme"></button>
+                <button class="theme-btn dark" data-theme="dark" title="Dark Theme"></button>
+                <button class="theme-btn light" data-theme="light" title="Light Theme"></button>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2>Contact Us</h2>
+        <p>If you have any questions or feedback, feel free to reach out!</p>
+
+        <div class="contact-info" style="text-align: center; margin: 2rem 0; padding: 1rem; background: rgba(255, 255, 255, 0.1); border-radius: 10px;">
+            <h3>Contact Details</h3>
+            <p><strong>Email:</strong> mindmerge@gmail.com</p>
+            <p><strong>Phone:</strong> +63 912 345 6789</p>
+            <p><strong>Address:</strong> H5GH+63F, Manuel L. Quezon Ext, Antipolo, 1870 Rizal</p>
+        </div>
+
+        <div class="contact-form">
+            <h3>Send us a message</h3>
+            <form id="contactForm">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="4" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+
+        <h2>Meet Our Team</h2>
+        <div class="member-cards">
+            <div class="member-card">
+                <img src="Kurt.jpeg" alt="Team Member 1">
+                <h3>Kurt Martin Alonzo</h3>
+                <p><strong>Role:</strong> Developer</p>
+                <p><strong>Contributions:</strong></p>
+                <ul>
+                    <li>HTML/CSS/JS Developer</li>
+                    <li>Game Logic Implementation</li>
+                    <li>Create 2 Game</li>
+                </ul>
+            </div>
+
+            <div class="member-card">
+                <img src="Ashley.jpeg" alt="Team Member 2">
+                <h3>Ashley Capilos</h3>
+                <p><strong>Role:</strong> Designer/PPT</p>
+                <p><strong>Contributions:</strong></p>
+                <ul>
+                    <li>Design</li>
+                    <li>Theme Implementation</li>
+                    <li>Create 1 Game</li>
+                </ul>
+            </div>
+
+            <div class="member-card">
+                <img src="Angel.jpeg" alt="Team Member 3">
+                <h3>Angel Garcia</h3>
+                <p><strong>Role:</strong> Designer/PPT</p>
+                <p><strong>Contributions:</strong></p>
+                <ul>
+                    <li>Question</li>
+                    <li>Theme Implementation</li>
+                    <li>Testing and QA</li>
+                </ul>
+            </div>
+        </div>
+        
+       
+      
+    </div>
+    
+    <script>
+        // Theme Switching
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeButtons = document.querySelectorAll('.theme-btn');
+            
+            // Load saved theme from localStorage
+            const savedTheme = localStorage.getItem('mindMergeTheme') || 'default';
+            applyTheme(savedTheme);
+
+            // Theme switching functionality
+            themeButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const theme = button.dataset.theme;
+                    applyTheme(theme);
+                    // Save theme preference
+                    localStorage.setItem('mindMergeTheme', theme);
+                    // Broadcast theme change to other pages
+                    broadcastThemeChange(theme);
+                });
+            });
+
+            function applyTheme(theme) {
+                // Remove active class from all buttons
+                themeButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to selected theme button
+                const activeButton = document.querySelector(`.theme-btn[data-theme="${theme}"]`);
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+
+                // Apply theme class to body
+                document.body.className = theme === 'default' ? '' : `theme-${theme}`;
+            }
+
+            function broadcastThemeChange(theme) {
+                // Broadcast to all windows/tabs
+                localStorage.setItem('mindMergeTheme', theme);
+                
+                // Broadcast to any iframes
+                document.querySelectorAll('iframe').forEach(iframe => {
+                    try {
+                        iframe.contentWindow.postMessage({ type: 'themeChange', theme }, '*');
+                    } catch (e) {
+                        console.log('Could not update iframe theme');
+                    }
+                });
+            }
+        });
+
+        // Listen for theme changes from other pages
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'themeChange') {
+                applyTheme(event.data.theme);
+            }
+        });
+
+        // Listen for storage changes (when theme is changed in another tab/window)
+        window.addEventListener('storage', (event) => {
+            if (event.key === 'mindMergeTheme') {
+                applyTheme(event.newValue || 'default');
+            }
+        });
+    </script>
+</body>
+</html>

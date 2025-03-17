@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="info.html">Game Info</a></li>
+      <li><a href="game.html">Play Game</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+        <li class="theme-selector">
+            <button class="theme-btn blue" data-theme="default" title="Blue Theme"></button>
+            <button class="theme-btn pink" data-theme="pink" title="Pink Theme"></button>
+            <button class="theme-btn dark" data-theme="dark" title="Dark Theme"></button>
+            <button class="theme-btn light" data-theme="light" title="Light Theme"></button>
+        </li>
+    </ul>
+  </nav>
+
+  <!-- Username Input Section -->
+  <section id="username-section">
+    <h1>Welcome to Mind Merge Quiz</h1>
+    <div class="username-container">
+      <input type="text" id="username-input" placeholder="Enter your username to start" maxlength="20">
+      <button onclick="setUsername()">Start Game</button>
+    </div>
+  </section>
+
+  <!-- Home Page -->
+  <section id="home" style="display: none;">
+    <h1>Welcome to the Quiz App</h1>
+    <p>Select a quiz topic to begin!</p>
+    <div class="topic-selection">
+      <button onclick="startQuiz('technology')">Technology</button>
+      <button onclick="startQuiz('englishVocabulary')">English</button>
+      <button onclick="startQuiz('history')">History</button>
+    </div>
+  </section>
+
+  <!-- Quiz Section -->
+  <section id="quiz" style="display: none;">
+    <h1 id="quiz-topic"></h1>
+    <div id="question-container">
+      <p id="question"></p>
+      <div id="choices"></div>
+      <p id="result"></p>
+      <p>Questions Remaining: <span id="remaining"></span></p>
+      <p id="timer">Time left: 10s</p>
+      <p id="hints-remaining">Hints Remaining: 3</p>
+      <p id="hint"></p>
+    </div>
+    <div class="quiz-controls">
+      <button onclick="showHint()">Hint</button>
+      <button onclick="skipQuestion()">Skip</button>
+      <button onclick="resetQuiz()">Reset Quiz</button>
+    </div>
+  </section>
+
+  <!-- Leaderboard Section -->
+  <section id="leaderboard" style="display: none;">
+    <h1>Top Players</h1>
+    <div class="leaderboard-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Score</th>
+            <th>Topic</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard-body">
+        </tbody>
+      </table>
+    </div>
+    <button onclick="playAgain()">Play Again</button>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Mind Merge - ICT 1A. All Rights Reserved.</p>
+  </footer>
+
+  <script src="quiz.js"></script>
+  <script>
+    // Theme Switching
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeButtons = document.querySelectorAll('.theme-btn');
+        
+        // Load saved theme from localStorage
+        const savedTheme = localStorage.getItem('mindMergeTheme') || 'default';
+        applyTheme(savedTheme);
+
+        // Theme switching functionality
+        themeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const theme = button.dataset.theme;
+                applyTheme(theme);
+                // Save theme preference
+                localStorage.setItem('mindMergeTheme', theme);
+                // Broadcast theme change to other pages
+                broadcastThemeChange(theme);
+            });
+        });
+
+        function applyTheme(theme) {
+            // Remove active class from all buttons
+            themeButtons.forEach(btn => btn.classList.remove('active'));
+            
+            // Add active class to selected theme button
+            const activeButton = document.querySelector(`.theme-btn[data-theme="${theme}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+
+            // Apply theme class to body
+            document.body.className = theme === 'default' ? '' : `theme-${theme}`;
+        }
+
+        function broadcastThemeChange(theme) {
+            // Broadcast to all windows/tabs
+            localStorage.setItem('mindMergeTheme', theme);
+            
+            // Broadcast to any iframes
+            document.querySelectorAll('iframe').forEach(iframe => {
+                try {
+                    iframe.contentWindow.postMessage({ type: 'themeChange', theme }, '*');
+                } catch (e) {
+                    console.log('Could not update iframe theme');
+                }
+            });
+        }
+    });
+
+    // Listen for theme changes from other pages
+    window.addEventListener('message', (event) => {
+        if (event.data.type === 'themeChange') {
+            applyTheme(event.data.theme);
+        }
+    });
+
+    // Listen for storage changes (when theme is changed in another tab/window)
+    window.addEventListener('storage', (event) => {
+        if (event.key === 'mindMergeTheme') {
+            applyTheme(event.newValue || 'default');
+        }
+    });
+  </script>
+</body>
+</html>
